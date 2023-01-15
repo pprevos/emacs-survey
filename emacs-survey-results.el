@@ -3,7 +3,7 @@
 ;;; Commentary:
 ;;
 ;; This code downloads the 2020 CSV results and visualises
-;; one question using plan text.
+;; one question using plain text.
 ;; See: https://lucidmanager.org/productivity/emacs-survey-results
 ;;
 ;;; Code:
@@ -29,17 +29,17 @@
           (seq-map (lambda (list) (nth (- n 1) list)) csv)))
 
 (defun csv-extract-column-name (name csv)
-  "Extract the values in column with NAME from parsed CSV into a list."
+  "Extract the values in a column with NAME from parsed CSV into a list."
   (mapcar #'cdr
           (seq-map (apply-partially #'assoc name) csv)))
 
 (defun create-frequency-table (data)
   "Generate an ordered frequency table from DATA."
-  (sort (-frequencies list)
+  (sort (-frequencies data)
         (lambda (a b) (> (cdr a) (cdr b)))))
 
 (defun visualise-frequency-table (table n var title)
-  "Create a barchart from a frequency TABLE with top N entries.
+  "Create a bar chart from a frequency TABLE with top N entries.
 VAR and TITLE used for display."
   (chart-bar-quickie
    'horizontal
